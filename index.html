@@ -1,0 +1,76 @@
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const controls = [
+        'play-large',
+       
+        
+    ];
+    const player = Plyr.setup('.player', { controls });
+
+    const adVideo = document.getElementById('ad-video');
+    const originalContainer = document.getElementById('container');
+    const originalVideo = document.getElementById('player');
+    const skipButton = document.getElementById('skip-button');
+    const timer = document.getElementById('timer');
+
+    // Variable to track whether the timer has ended
+    let timerEnded = false;
+
+    // Update timer every second
+    let timeLeft = 8;
+    const countdown = () => {
+        const interval = setInterval(() => {
+            timer.textContent = `Skip in ${timeLeft}s`;
+            timeLeft--;
+
+            if (timeLeft < 0) {
+                clearInterval(interval);
+                timer.textContent = '';
+                skipButton.textContent = 'Skip Ad';
+                timerEnded = true; // Set the timerEnded flag to true when the timer ends
+            }
+        }, 1000);
+    };
+
+    // Start the timer and show skip button after 5 seconds when the ad video starts playing
+    adVideo.addEventListener('play', () => {
+        setTimeout(() => {
+            skipButton.style.display = 'block';
+        }, 9000);
+        countdown();
+    });
+
+    // Skip ad when skip button is clicked
+    skipButton.addEventListener('click', () => {
+        if (timerEnded) { // Check if the timer has ended
+            adVideo.pause();
+            adVideo.style.display = 'none';
+            originalContainer.style.display = 'block';
+            originalVideo.play();
+            skipButton.style.display = 'none'; // Hide skip button after clicking
+            timer.style.display = 'none'; // Hide timer after clicking skip
+        }
+    });
+
+    // Add event listener to handle ad ending
+    adVideo.addEventListener('ended', () => {
+        adVideo.style.display = 'none';
+        originalContainer.style.display = 'block';
+        originalVideo.play();
+        timer.style.display = 'none'; // Hide timer after ad ends
+    });
+});
+
+      function setAdVideoSource(url) {
+    const adVideo = document.getElementById('ad-video');
+    const source = document.createElement('source');
+    source.src = url;
+    source.type = 'video/mp4';
+    adVideo.appendChild(source);
+    adVideo.load();
+}
+
+// Set the ad video source dynamically
+setAdVideoSource('https://hugh.cdn.rumble.cloud/video/s8/2/n/I/c/c/nIccm.baa.mp4');
+
+  
