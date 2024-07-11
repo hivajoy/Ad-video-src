@@ -12,7 +12,7 @@
 
             let timerEnded = false;
 
-            let timeLeft = 9;
+            let timeLeft = 12;
             const countdown = () => {
                 const interval = setInterval(() => {
                     timer.textContent = `Skip in ${timeLeft}s`;
@@ -30,7 +30,7 @@
             adVideo.addEventListener('play', () => {
                 setTimeout(() => {
                     skipButton.style.display = 'block';
-                }, 10000);
+                }, 13000);
                 countdown();
             });
 
@@ -61,6 +61,6 @@
                 adLink.href = link;
             }
 
-            setAdVideoSource('https://hugh.cdn.rumble.cloud/video/s8/2/q/0/3/N/q03Ns.caa.mp4', 'http://hivajoy.free.nf');
+            setAdVideoSource('https://hugh.cdn.rumble.cloud/video/s8/2/D/E/9/Q/DE9Qs.caa.mp4', 'https://hivajoyai.blogspot.com');
         });
   
